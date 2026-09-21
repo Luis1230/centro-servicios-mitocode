@@ -26,5 +26,5 @@ public class ProfesionalEntity {
     public String especialidad;
 
     @Column(name = "estado_activo", nullable = false)
-    public boolean estadoActivo;
+    public boolean estadoActivo = true;
 }
