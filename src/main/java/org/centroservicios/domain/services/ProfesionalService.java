@@ -12,9 +12,6 @@ public interface ProfesionalService {
 
     ApiResponse<List<ProfesionalResponseDto>> buscarProfesionalPorNombresCompletos(String busqueda);
 
-    ApiResponse<List<ProfesionalResponseDto>> listarActivos();
-
-    ApiResponse<List<ProfesionalResponseDto>> buscarPorEspecialidad(String especialidad);
-
+    ApiResponse<List<ProfesionalResponseDto>> listarActivos(int page, int limit);
 
 }

@@ -1,11 +1,15 @@
 package org.centroservicios.infrastructure.adapter.output.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.UUID;
 
 @Entity
-@Table(name = "profesional")
+@Table(name = "profesional", schema = "centroservicios")
 @Data
 @Builder
 @AllArgsConstructor

@@ -6,16 +6,16 @@ import io.quarkus.panache.common.Page;
 import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.centroservicios.infrastructure.adapter.input.rest.common.PageResponse;
-import org.centroservicios.infrastructure.adapter.output.entity.ProfesionalEntity;
+import org.centroservicios.infrastructure.adapter.output.entity.ClienteEntity;
 
 import java.util.List;
 import java.util.UUID;
 
 @ApplicationScoped
-public class ProfesionalRepository implements PanacheRepositoryBase<ProfesionalEntity, UUID> {
+public class ClienteRepository implements PanacheRepositoryBase<ClienteEntity, UUID> {
 
     /**
-     * Buscar profesionales por nombres y/o apellidos.
+     * Buscar clientes por nombres y/o apellidos.
      *
      * Ejemplos:
      * Luis       -> Luis Alejandro Muñante Escate
@@ -23,7 +23,7 @@ public class ProfesionalRepository implements PanacheRepositoryBase<ProfesionalE
      * Escate     -> Luis Alejandro Muñante Escate
      * Luis Muñante -> Luis Alejandro Muñante Escate
      */
-    public List<ProfesionalEntity> buscarPorNombresCompletos(String busqueda) {
+    public List<ClienteEntity> buscarPorNombresCompletos(String busqueda) {
 
         String filtro = "%" + busqueda.trim().toLowerCase() + "%";
 
@@ -34,12 +34,11 @@ public class ProfesionalRepository implements PanacheRepositoryBase<ProfesionalE
     }
 
     /**
-     * Listar profesionales activos.
+     * Listar clientes activos.
      */
-    public PageResponse<ProfesionalEntity> listarActivos(int page,
-                                                 int limit) {
+    public PageResponse<ClienteEntity> listarActivos(int page, int limit) {
 
-        PanacheQuery<ProfesionalEntity> query = find("estadoActivo = true", Sort.by("apellidos"))
+        PanacheQuery<ClienteEntity> query = find("estadoActivo = true", Sort.by("apellidos"))
                 .page(Page.of(page, limit));
 
         query.page(Page.of(page - 1, limit ));
@@ -47,7 +46,7 @@ public class ProfesionalRepository implements PanacheRepositoryBase<ProfesionalE
         long totalElements = query.count();
         int totalPages = query.pageCount();
 
-        return new PageResponse<ProfesionalEntity>(query.list(), page, limit, totalElements, totalPages);
+        return new PageResponse<ClienteEntity>(query.list(), page, limit, totalElements, totalPages);
     }
 
 }

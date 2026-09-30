@@ -8,15 +8,15 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.centroservicios.domain.services.ProfesionalService;
-import org.centroservicios.infrastructure.adapter.input.rest.dto.ProfesionalRequestDto;
+import org.centroservicios.domain.services.ClienteService;
+import org.centroservicios.infrastructure.adapter.input.rest.dto.ClienteRequestDto;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 
 /**
- * Controller REST encargado de exponer las operaciones sobre profesionales.
+ * Controller REST encargado de exponer las operaciones sobre clientes.
  *
- * <p>Delega toda la logica de negocio en {@link ProfesionalService}; este
+ * <p>Delega toda la logica de negocio en {@link ClienteService}; este
  * controller solo se encarga de mapear rutas HTTP, validar la entrada
  * y traducir el {@code statusCode} del {@code ApiResponse} al codigo
  * HTTP real de la respuesta.</p>
@@ -25,29 +25,29 @@ import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 @RequiredArgsConstructor
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@Path("/mitocode/api/v1/centro-servicios/profesional")
-public class ProfesionalController {
+@Path("/mitocode/api/v1/centro-servicios/cliente")
+public class ClienteController {
 
-    private final ProfesionalService profesionalService;
+    private final ClienteService clienteService;
 
     @POST
     @Path("/create")
-    public Response createProfesional(@Valid ProfesionalRequestDto request) {
+    public Response createCliente(@Valid ClienteRequestDto request) {
         return Response.status(201)
-                .entity(profesionalService.createProfesional(request))
+                .entity(clienteService.createCliente(request))
                 .build();
     }
 
     @GET
     @Path("/{busqueda}")
-    public Response getProfesionalesNombresApellidos(@PathParam("busqueda") String busqueda) {
+    public Response getClientesNombresApellidos(@PathParam("busqueda") String busqueda) {
         return Response.status(200)
-                .entity(profesionalService.buscarProfesionalPorNombresCompletos(busqueda))
+                .entity(clienteService.buscarClientePorNombresCompletos(busqueda))
                 .build();
     }
 
     @GET
-    public Response getProfesionalesActivos(
+    public Response getNombresActivos(
             @Parameter(
                     description = "Número de página a consultar",
                     example = "1",
@@ -68,8 +68,7 @@ public class ProfesionalController {
             int limit
     ) {
         return Response.status(200)
-                .entity(profesionalService.listarActivos(page, limit))
+                .entity(clienteService.listarActivos(page, limit))
                 .build();
     }
-
 }

@@ -1,11 +1,13 @@
 package org.centroservicios.application;
 
+import io.netty.handler.codec.http.HttpResponseStatus;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.centroservicios.domain.services.ProfesionalService;
 import org.centroservicios.infrastructure.adapter.input.rest.common.ApiResponse;
+import org.centroservicios.infrastructure.adapter.input.rest.common.PageResponse;
 import org.centroservicios.infrastructure.adapter.input.rest.dto.ProfesionalRequestDto;
 import org.centroservicios.infrastructure.adapter.input.rest.dto.ProfesionalResponseDto;
 import org.centroservicios.infrastructure.adapter.input.rest.mapper.ProfesionalMapper;
@@ -44,17 +46,12 @@ public class ProfesionalUseCase implements ProfesionalService {
     public ApiResponse<ProfesionalResponseDto> createProfesional(ProfesionalRequestDto profesionalRequestDto) {
 
         ProfesionalEntity profesionalEntity = profesionalMapper.toEntity(profesionalRequestDto);
+        profesionalEntity.setEstadoActivo(true);
         profesionalRepository.persist(profesionalEntity);
 
         return ApiResponse.<ProfesionalResponseDto>builder()
-                .data(ProfesionalResponseDto.builder()
-                        .id(profesionalEntity.getId())
-                        .nombres(profesionalEntity.getNombres())
-                        .apellidos(profesionalEntity.getApellidos())
-                        .especialidad(profesionalEntity.getEspecialidad())
-                        .activo(profesionalEntity.isEstadoActivo())
-                        .build())
-                .statusCode(201)
+                .data(profesionalMapper.toResponse(profesionalEntity))
+                .statusCode(HttpResponseStatus.CREATED.code())
                 .message("Profesional creado exitosamente")
                 .timestamp(Instant.now())
                 .build();
@@ -62,16 +59,31 @@ public class ProfesionalUseCase implements ProfesionalService {
 
     @Override
     public ApiResponse<List<ProfesionalResponseDto>> buscarProfesionalPorNombresCompletos(String busqueda) {
-        return null;
+
+        List<ProfesionalEntity> profesionalLst = profesionalRepository.buscarPorNombresCompletos(busqueda);
+
+        return ApiResponse.<List<ProfesionalResponseDto>>builder()
+                .data(profesionalMapper.toResponseList(profesionalLst))
+                .statusCode(HttpResponseStatus.OK.code())
+                .message("Se obtuvo correctamente la información requerida.")
+                .totalElements(profesionalLst.size())
+                .timestamp(Instant.now())
+                .build();
     }
 
     @Override
-    public ApiResponse<List<ProfesionalResponseDto>> listarActivos() {
-        return null;
-    }
+    public ApiResponse<List<ProfesionalResponseDto>> listarActivos(int page, int limit) {
 
-    @Override
-    public ApiResponse<List<ProfesionalResponseDto>> buscarPorEspecialidad(String especialidad) {
-        return null;
+        PageResponse<ProfesionalEntity> pageResponse = profesionalRepository.listarActivos(page, limit);
+
+        return ApiResponse.<List<ProfesionalResponseDto>>builder()
+                .data(profesionalMapper.toResponseList(pageResponse.data()))
+                .statusCode(HttpResponseStatus.OK.code())
+                .message("Se obtuvo correctamente la información requerida.")
+                .currentPage(pageResponse.currentPage())
+                .totalElements((int)pageResponse.totalElements())
+                .totalPages(pageResponse.totalPAges())
+                .timestamp(Instant.now())
+                .build();
     }
 }
