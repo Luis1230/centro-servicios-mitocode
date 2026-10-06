@@ -1,9 +1,10 @@
 package org.centroservicios.infrastructure.adapter.output.repository;
 
-import io.quarkus.hibernate.orm.panache.PanacheQuery;
-import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
+import io.quarkus.hibernate.reactive.panache.PanacheQuery;
+import io.quarkus.hibernate.reactive.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Page;
 import io.quarkus.panache.common.Sort;
+import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.centroservicios.infrastructure.adapter.input.rest.common.PageResponse;
 import org.centroservicios.infrastructure.adapter.output.entity.ClienteEntity;
@@ -23,7 +24,7 @@ public class ClienteRepository implements PanacheRepositoryBase<ClienteEntity, U
      * Escate     -> Luis Alejandro Muñante Escate
      * Luis Muñante -> Luis Alejandro Muñante Escate
      */
-    public List<ClienteEntity> buscarPorNombresCompletos(String busqueda) {
+    public Uni<List<ClienteEntity>> buscarPorNombresCompletos(String busqueda) {
 
         String filtro = "%" + busqueda.trim().toLowerCase() + "%";
 
@@ -36,17 +37,17 @@ public class ClienteRepository implements PanacheRepositoryBase<ClienteEntity, U
     /**
      * Listar clientes activos.
      */
-    public PageResponse<ClienteEntity> listarActivos(int page, int limit) {
+    public Uni<PageResponse<ClienteEntity>> listarActivos(int page, int limit) {
 
         PanacheQuery<ClienteEntity> query = find("estadoActivo = true", Sort.by("apellidos"))
                 .page(Page.of(page, limit));
 
-        query.page(Page.of(page - 1, limit ));
 
-        long totalElements = query.count();
-        int totalPages = query.pageCount();
-
-        return new PageResponse<ClienteEntity>(query.list(), page, limit, totalElements, totalPages);
-    }
+        return query.list()
+                .chain(lista -> query.count()
+                        .map(total -> {
+                            int totalPages = (int) Math.ceil((double) total / limit);
+                            return new PageResponse<>(lista, page, limit, total, totalPages);
+                        }));}
 
 }

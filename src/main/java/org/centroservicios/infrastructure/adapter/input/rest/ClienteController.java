@@ -1,5 +1,6 @@
 package org.centroservicios.infrastructure.adapter.input.rest;
 
+import io.smallrye.mutiny.Uni;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -32,22 +33,26 @@ public class ClienteController {
 
     @POST
     @Path("/create")
-    public Response createCliente(@Valid ClienteRequestDto request) {
-        return Response.status(201)
-                .entity(clienteService.createCliente(request))
-                .build();
+    public Uni<Response> createCliente(@Valid ClienteRequestDto request) {
+
+        return clienteService.createCliente(request)
+                .map(apiResponse -> Response.status(Response.Status.CREATED)
+                        .entity(apiResponse)
+                        .build());
     }
 
     @GET
     @Path("/{busqueda}")
-    public Response getClientesNombresApellidos(@PathParam("busqueda") String busqueda) {
-        return Response.status(200)
-                .entity(clienteService.buscarClientePorNombresCompletos(busqueda))
-                .build();
+    public Uni<Response> getClientesNombresApellidos(@PathParam("busqueda") String busqueda) {
+
+        return clienteService.buscarClientePorNombresCompletos(busqueda)
+                .map(apiResponse -> Response.status(Response.Status.OK)
+                        .entity(apiResponse)
+                        .build());
     }
 
     @GET
-    public Response getNombresActivos(
+    public Uni<Response> getNombresActivos(
             @Parameter(
                     description = "Número de página a consultar",
                     example = "1",
@@ -67,8 +72,10 @@ public class ClienteController {
             @Max(value = 20, message = "No puedes pedir más de 20 registros")
             int limit
     ) {
-        return Response.status(200)
-                .entity(clienteService.listarActivos(page, limit))
-                .build();
+
+        return clienteService.listarActivos(page, limit)
+                .map(apiResponse -> Response.status(Response.Status.OK)
+                        .entity(apiResponse)
+                        .build());
     }
 }

@@ -38,5 +38,5 @@ public class ClienteEntity {
     private String telefono;
 
     @Column(name = "estado_activo", nullable = false)
-    private boolean estadoActivo = true;
+    public boolean estadoActivo = true;
 }

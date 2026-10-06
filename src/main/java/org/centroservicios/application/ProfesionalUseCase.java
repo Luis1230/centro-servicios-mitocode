@@ -1,6 +1,9 @@
 package org.centroservicios.application;
 
 import io.netty.handler.codec.http.HttpResponseStatus;
+import io.quarkus.hibernate.reactive.panache.common.WithSession;
+import io.quarkus.hibernate.reactive.panache.common.WithTransaction;
+import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -41,49 +44,49 @@ public class ProfesionalUseCase implements ProfesionalService {
     private final ProfesionalRepository profesionalRepository;
     private final ProfesionalMapper profesionalMapper;
 
-    @Transactional
+    @WithTransaction
     @Override
-    public ApiResponse<ProfesionalResponseDto> createProfesional(ProfesionalRequestDto profesionalRequestDto) {
+    public Uni<ApiResponse<ProfesionalResponseDto>> createProfesional(ProfesionalRequestDto profesionalRequestDto) {
 
         ProfesionalEntity profesionalEntity = profesionalMapper.toEntity(profesionalRequestDto);
         profesionalEntity.setEstadoActivo(true);
-        profesionalRepository.persist(profesionalEntity);
 
-        return ApiResponse.<ProfesionalResponseDto>builder()
-                .data(profesionalMapper.toResponse(profesionalEntity))
-                .statusCode(HttpResponseStatus.CREATED.code())
-                .message("Profesional creado exitosamente")
-                .timestamp(Instant.now())
-                .build();
+        return profesionalRepository.persist(profesionalEntity)
+                .map(saved -> ApiResponse.<ProfesionalResponseDto>builder()
+                        .data(profesionalMapper.toResponse(saved))
+                        .statusCode(HttpResponseStatus.CREATED.code())
+                        .message("Profesional creado exitosamente")
+                        .timestamp(Instant.now())
+                        .build());
     }
 
+    @WithSession
     @Override
-    public ApiResponse<List<ProfesionalResponseDto>> buscarProfesionalPorNombresCompletos(String busqueda) {
+    public Uni<ApiResponse<List<ProfesionalResponseDto>>> buscarProfesionalPorNombresCompletos(String busqueda) {
 
-        List<ProfesionalEntity> profesionalLst = profesionalRepository.buscarPorNombresCompletos(busqueda);
-
-        return ApiResponse.<List<ProfesionalResponseDto>>builder()
-                .data(profesionalMapper.toResponseList(profesionalLst))
-                .statusCode(HttpResponseStatus.OK.code())
-                .message("Se obtuvo correctamente la información requerida.")
-                .totalElements(profesionalLst.size())
-                .timestamp(Instant.now())
-                .build();
+        return profesionalRepository.buscarPorNombresCompletos(busqueda)
+                .map(profesionalLst -> ApiResponse.<List<ProfesionalResponseDto>>builder()
+                        .data(profesionalMapper.toResponseList(profesionalLst))
+                        .statusCode(HttpResponseStatus.OK.code())
+                        .message("Se obtuvo correctamente la información requerida.")
+                        .totalElements(profesionalLst.size())
+                        .timestamp(Instant.now())
+                        .build());
     }
 
+    @WithSession
     @Override
-    public ApiResponse<List<ProfesionalResponseDto>> listarActivos(int page, int limit) {
+    public Uni<ApiResponse<List<ProfesionalResponseDto>>> listarActivos(int page, int limit) {
 
-        PageResponse<ProfesionalEntity> pageResponse = profesionalRepository.listarActivos(page, limit);
-
-        return ApiResponse.<List<ProfesionalResponseDto>>builder()
-                .data(profesionalMapper.toResponseList(pageResponse.data()))
-                .statusCode(HttpResponseStatus.OK.code())
-                .message("Se obtuvo correctamente la información requerida.")
-                .currentPage(pageResponse.currentPage())
-                .totalElements((int)pageResponse.totalElements())
-                .totalPages(pageResponse.totalPAges())
-                .timestamp(Instant.now())
-                .build();
+        return profesionalRepository.listarActivos(page, limit)
+                .map(pageResponse -> ApiResponse.<List<ProfesionalResponseDto>>builder()
+                        .data(profesionalMapper.toResponseList(pageResponse.data()))
+                        .statusCode(HttpResponseStatus.OK.code())
+                        .message("Se obtuvo correctamente la información requerida.")
+                        .currentPage(pageResponse.currentPage())
+                        .totalElements((int) pageResponse.totalElements())
+                        .totalPages(pageResponse.totalPAges())
+                        .timestamp(Instant.now())
+                        .build());
     }
 }

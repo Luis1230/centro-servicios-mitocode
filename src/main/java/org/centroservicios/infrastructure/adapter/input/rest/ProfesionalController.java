@@ -1,5 +1,6 @@
 package org.centroservicios.infrastructure.adapter.input.rest;
 
+import io.smallrye.mutiny.Uni;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -32,22 +33,26 @@ public class ProfesionalController {
 
     @POST
     @Path("/create")
-    public Response createProfesional(@Valid ProfesionalRequestDto request) {
-        return Response.status(201)
-                .entity(profesionalService.createProfesional(request))
-                .build();
+    public Uni<Response> createProfesional(@Valid ProfesionalRequestDto request) {
+
+        return profesionalService.createProfesional(request)
+                .map(apiResponse -> Response.status(Response.Status.CREATED)
+                        .entity(apiResponse)
+                        .build());
     }
 
     @GET
     @Path("/{busqueda}")
-    public Response getProfesionalesNombresApellidos(@PathParam("busqueda") String busqueda) {
-        return Response.status(200)
-                .entity(profesionalService.buscarProfesionalPorNombresCompletos(busqueda))
-                .build();
+    public Uni<Response> getProfesionalesNombresApellidos(@PathParam("busqueda") String busqueda) {
+
+        return profesionalService.buscarProfesionalPorNombresCompletos(busqueda)
+                .map(apiResponse -> Response.status(Response.Status.OK)
+                        .entity(apiResponse)
+                        .build());
     }
 
     @GET
-    public Response getProfesionalesActivos(
+    public Uni<Response> getProfesionalesActivos(
             @Parameter(
                     description = "Número de página a consultar",
                     example = "1",
@@ -67,9 +72,11 @@ public class ProfesionalController {
             @Max(value = 20, message = "No puedes pedir más de 20 registros")
             int limit
     ) {
-        return Response.status(200)
-                .entity(profesionalService.listarActivos(page, limit))
-                .build();
+
+        return profesionalService.listarActivos(page, limit)
+                .map(apiResponse -> Response.status(Response.Status.OK)
+                        .entity(apiResponse)
+                        .build());
     }
 
 }

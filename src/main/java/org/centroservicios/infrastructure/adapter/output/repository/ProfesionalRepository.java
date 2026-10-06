@@ -1,9 +1,10 @@
 package org.centroservicios.infrastructure.adapter.output.repository;
 
-import io.quarkus.hibernate.orm.panache.PanacheQuery;
-import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
+import io.quarkus.hibernate.reactive.panache.PanacheQuery;
+import io.quarkus.hibernate.reactive.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Page;
 import io.quarkus.panache.common.Sort;
+import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.centroservicios.infrastructure.adapter.input.rest.common.PageResponse;
 import org.centroservicios.infrastructure.adapter.output.entity.ProfesionalEntity;
@@ -23,31 +24,27 @@ public class ProfesionalRepository implements PanacheRepositoryBase<ProfesionalE
      * Escate     -> Luis Alejandro Muñante Escate
      * Luis Muñante -> Luis Alejandro Muñante Escate
      */
-    public List<ProfesionalEntity> buscarPorNombresCompletos(String busqueda) {
-
+    public Uni<List<ProfesionalEntity>> buscarPorNombresCompletos(String busqueda) {
         String filtro = "%" + busqueda.trim().toLowerCase() + "%";
 
-        return find("""
-                LOWER(CONCAT(nombres, ' ', apellidos)) LIKE ?1
-                """, filtro)
+        return find("LOWER(CONCAT(nombres, ' ', apellidos)) LIKE ?1", filtro)
                 .list();
     }
 
     /**
      * Listar profesionales activos.
      */
-    public PageResponse<ProfesionalEntity> listarActivos(int page,
-                                                 int limit) {
+    public Uni<PageResponse<ProfesionalEntity>> listarActivos(int page, int limit) {
 
         PanacheQuery<ProfesionalEntity> query = find("estadoActivo = true", Sort.by("apellidos"))
-                .page(Page.of(page, limit));
+                .page(Page.of(page - 1, limit));
 
-        query.page(Page.of(page - 1, limit ));
-
-        long totalElements = query.count();
-        int totalPages = query.pageCount();
-
-        return new PageResponse<ProfesionalEntity>(query.list(), page, limit, totalElements, totalPages);
+        return query.list()
+                .chain(lista -> query.count()
+                        .map(total -> {
+                            int totalPages = (int) Math.ceil((double) total / limit);
+                            return new PageResponse<>(lista, page, limit, total, totalPages);
+                        }));
     }
 
 }
