@@ -8,6 +8,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.centroservicios.domain.enums.ErrorType;
+import org.centroservicios.domain.exception.BusinessException;
 import org.centroservicios.domain.services.ClienteService;
 import org.centroservicios.infrastructure.adapter.input.rest.common.ApiResponse;
 import org.centroservicios.infrastructure.adapter.input.rest.dto.ClienteRequestDto;
@@ -15,6 +17,10 @@ import org.centroservicios.infrastructure.adapter.input.rest.dto.ClienteResponse
 import org.centroservicios.infrastructure.adapter.input.rest.mapper.ClienteMapper;
 import org.centroservicios.infrastructure.adapter.output.entity.ClienteEntity;
 import org.centroservicios.infrastructure.adapter.output.repository.ClienteRepository;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Retry;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 
 import java.time.Instant;
 import java.util.List;
@@ -42,6 +48,11 @@ public class ClienteUseCase  implements ClienteService {
     private final ClienteRepository clienteRepository;
     private final ClienteMapper clienteMapper;
 
+
+    @Fallback(fallbackMethod = "fallbackCreateClient")
+    @CircuitBreaker(requestVolumeThreshold = 4, failureRatio = 0.5, delay = 10000)
+    @Retry(maxRetries = 2, delay = 500)
+    @Timeout(2000)
     @WithTransaction
     @Override
     public Uni<ApiResponse<ClienteResponseDto>> createCliente(ClienteRequestDto clienteRequestDto) {
@@ -63,6 +74,12 @@ public class ClienteUseCase  implements ClienteService {
                         .message("Cliente creado exitosamente")
                         .timestamp(Instant.now())
                         .build());
+    }
+
+    public Uni<ApiResponse<ClienteResponseDto>> fallbackCreateClient(ClienteRequestDto clienteRequestDto) {
+        throw new BusinessException(
+                ErrorType.CIRCUIT_BREAKER_ERROR,
+                ErrorType.CIRCUIT_BREAKER_ERROR.getDescription());
     }
 
     @WithSession

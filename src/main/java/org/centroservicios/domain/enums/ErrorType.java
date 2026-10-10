@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public enum ErrorType {
 
-    VALIDATION_ERROR("V-01", "Error en la validación de datos", Response.Status.BAD_REQUEST),
+    CIRCUIT_BREAKER_ERROR("V-01", "Error al crear cliente.", Response.Status.SERVICE_UNAVAILABLE),
     GENERIC_ERROR("G-02", "Error interno del sistema. Reintentar más tarde", Response.Status.INTERNAL_SERVER_ERROR),
     PROFESIONAL_NO_EXISTE("A001", "El profesional no existe.", Response.Status.PRECONDITION_REQUIRED),
     PROFESIONAL_DESACTIVADO("A002", "El profesional se encuentra desactivado", Response.Status.PRECONDITION_REQUIRED),
