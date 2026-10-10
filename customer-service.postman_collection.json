@@ -1,0 +1,464 @@
+{
+  "info": {
+    "_postman_id": "ec01f773-28d4-41ff-8a90-d9a69bc79351",
+    "name": "customer-service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "16583355"
+  },
+  "item": [
+    {
+      "name": "profesional",
+      "item": [
+        {
+          "name": "crear",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombres\": \"Jesus\",\r\n    \"apellidos\": \"Mendoza Perez\",\r\n    \"especialidad\": \"Psicologia\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/mitocode/api/v1/centro-servicios/profesional/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "mitocode",
+                "api",
+                "v1",
+                "centro-servicios",
+                "profesional",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "activos",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombres\": \"Luisx\",\r\n    \"apellidos\": \"Mendoza Perez\",\r\n    \"especialidad\": \"Psicologia\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/mitocode/api/v1/centro-servicios/profesional?page=2&limit=10",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "mitocode",
+                "api",
+                "v1",
+                "centro-servicios",
+                "profesional"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "nombresApellidos",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombres\": \"Luisx\",\r\n    \"apellidos\": \"Mendoza Perez\",\r\n    \"especialidad\": \"Psicologia\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/mitocode/api/v1/centro-servicios/profesional/Mendoza",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "mitocode",
+                "api",
+                "v1",
+                "centro-servicios",
+                "profesional",
+                "Mendoza"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "cliente",
+      "item": [
+        {
+          "name": "crear",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombres\": \"Luisx\",\r\n    \"apellidos\": \"Mendoza Perez\",\r\n    \"telefono\": \"985885478\",\r\n    \"email\": \"luis_cccx@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/mitocode/api/v1/centro-servicios/cliente/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "mitocode",
+                "api",
+                "v1",
+                "centro-servicios",
+                "cliente",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "activos",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombres\": \"Luisx\",\r\n    \"apellidos\": \"Mendoza Perez\",\r\n    \"especialidad\": \"Psicologia\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/mitocode/api/v1/centro-servicios/cliente?page=2&limit=10",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "mitocode",
+                "api",
+                "v1",
+                "centro-servicios",
+                "cliente"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "nombresApellidos",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombres\": \"Luisx\",\r\n    \"apellidos\": \"Mendoza Perez\",\r\n    \"especialidad\": \"Psicologia\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/mitocode/api/v1/centro-servicios/cliente/Mendoza",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "mitocode",
+                "api",
+                "v1",
+                "centro-servicios",
+                "cliente",
+                "Mendoza"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "horario",
+      "item": [
+        {
+          "name": "crear",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"profesionalId\": \"A43D10DC-1B18-448D-B9FC-1EC27B3AD291\",\r\n  \"fecha\": \"2026-09-30\",\r\n  \"horaInicio\": \"12:00:00\",\r\n  \"horaFin\": \"14:00:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/mitocode/api/v1/centro-servicios/registrar-horario/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "mitocode",
+                "api",
+                "v1",
+                "centro-servicios",
+                "registrar-horario",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "reserva",
+      "item": [
+        {
+          "name": "crear",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"clienteId\": \"60A2C735-FBE5-40A3-BA5A-581740FA7E1B\",\r\n  \"profesionalId\": \"A43D10DC-1B18-448D-B9FC-1EC27B3AD291\",\r\n  \"fecha\": \"2026-10-10\",\r\n  \"horaInicio\": \"10:00:00\",\r\n  \"horaFin\": \"11:00:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/mitocode/api/v1/centro-servicios/reserva/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "mitocode",
+                "api",
+                "v1",
+                "centro-servicios",
+                "reserva",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "cancelar reserva",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"profesionalId\": \"A43D10DC-1B18-448D-B9FC-1EC27B3AD291\",\r\n  \"fecha\": \"2026-09-30\",\r\n  \"horaInicio\": \"12:00:00\",\r\n  \"horaFin\": \"14:00:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/mitocode/api/v1/centro-servicios/reserva/cancelar-reserva/1EB2FB7F-E449-4DC5-B1F2-F951E65BCB05",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "mitocode",
+                "api",
+                "v1",
+                "centro-servicios",
+                "reserva",
+                "cancelar-reserva",
+                "1EB2FB7F-E449-4DC5-B1F2-F951E65BCB05"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "modificar horarios reserva",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"fecha\": \"2026-10-10\",\r\n  \"horaInicio\": \"13:00:00\",\r\n  \"horaFin\": \"14:00:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/mitocode/api/v1/centro-servicios/reserva/modificar-reserva/1EB2FB7F-E449-4DC5-B1F2-F951E65BCB05",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "mitocode",
+                "api",
+                "v1",
+                "centro-servicios",
+                "reserva",
+                "modificar-reserva",
+                "1EB2FB7F-E449-4DC5-B1F2-F951E65BCB05"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "profesionales por reservas",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"fecha\": \"2026-10-10\",\r\n  \"horaInicio\": \"13:00:00\",\r\n  \"horaFin\": \"14:00:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/mitocode/api/v1/centro-servicios/reserva/profesionales-por-reservas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "mitocode",
+                "api",
+                "v1",
+                "centro-servicios",
+                "reserva",
+                "profesionales-por-reservas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "reservas-por-fecha",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"fecha\": \"2026-10-10\",\r\n  \"horaInicio\": \"13:00:00\",\r\n  \"horaFin\": \"14:00:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/mitocode/api/v1/centro-servicios/reserva/reservas-por-fecha",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "mitocode",
+                "api",
+                "v1",
+                "centro-servicios",
+                "reserva",
+                "reservas-por-fecha"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
