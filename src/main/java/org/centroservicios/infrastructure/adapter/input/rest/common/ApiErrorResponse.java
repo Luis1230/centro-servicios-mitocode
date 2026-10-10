@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 

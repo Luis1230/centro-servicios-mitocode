@@ -6,7 +6,6 @@ import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import io.smallrye.mutiny.Uni;
-import lombok.RequiredArgsConstructor;
 import org.centroservicios.domain.services.ProfesionalService;
 import org.centroservicios.infrastructure.adapter.input.rest.common.ApiResponse;
 import org.centroservicios.infrastructure.adapter.input.rest.dto.ProfesionalRequestDto;
@@ -14,7 +13,6 @@ import org.centroservicios.infrastructure.adapter.input.rest.dto.ProfesionalResp
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
-import java.util.List;
 import java.util.UUID;
 
 import static io.restassured.RestAssured.given;

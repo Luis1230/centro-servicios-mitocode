@@ -3,7 +3,6 @@ package org.centroservicios.infrastructure.adapter.output.repository;
 import io.quarkus.hibernate.reactive.panache.PanacheRepositoryBase;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
-import org.centroservicios.domain.enums.ReservaType;
 import org.centroservicios.infrastructure.adapter.output.entity.HorarioDisponibleEntity;
 
 import java.time.LocalDate;

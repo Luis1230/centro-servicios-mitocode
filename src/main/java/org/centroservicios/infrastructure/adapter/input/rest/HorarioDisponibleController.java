@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.centroservicios.domain.services.HorarioDisponibleService;
 import org.centroservicios.infrastructure.adapter.input.rest.dto.HorarioDisponibleRequestDto;
-import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 
 @Slf4j
 @RequiredArgsConstructor

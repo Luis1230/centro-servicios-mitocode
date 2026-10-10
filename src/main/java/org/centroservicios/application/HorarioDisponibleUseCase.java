@@ -1,8 +1,6 @@
 package org.centroservicios.application;
 
 import io.netty.handler.codec.http.HttpResponseStatus;
-import io.quarkus.hibernate.reactive.panache.PanacheRepositoryBase;
-
 import io.quarkus.hibernate.reactive.panache.common.WithTransaction;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;

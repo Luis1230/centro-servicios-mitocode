@@ -8,16 +8,9 @@ import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.centroservicios.domain.services.ReservaService;
-import org.centroservicios.infrastructure.adapter.input.rest.common.ApiErrorResponse;
-import org.centroservicios.infrastructure.adapter.input.rest.common.ApiResponse;
-import org.centroservicios.infrastructure.adapter.input.rest.dto.HorarioDisponibleRequestDto;
 import org.centroservicios.infrastructure.adapter.input.rest.dto.ReservaRequestDto;
 import org.centroservicios.infrastructure.adapter.input.rest.dto.ReservaUpdateRequestDto;
 import org.eclipse.microprofile.openapi.annotations.Operation;
-import org.eclipse.microprofile.openapi.annotations.media.Content;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
-import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 
 import java.util.UUID;
 
